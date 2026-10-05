@@ -27,8 +27,8 @@ export default function UpsellRFEF({ onAccept, onDecline }: UpsellRFEFProps) {
     return () => clearInterval(interval);
   }, []);
 
-  // HOTMART - Sales Funnel Widget
-  // script load and setup
+  // <!-- HOTMART - Sales Funnel Widget -->
+  // <!--- script load and setup --->
   useEffect(() => {
     const mountHotmart = () => {
       const checkoutElements = (window as any).checkoutElements;
@@ -53,26 +53,16 @@ export default function UpsellRFEF({ onAccept, onDecline }: UpsellRFEFProps) {
       if ((window as any).checkoutElements) {
         mountHotmart();
       } else {
-        script.addEventListener('load', mountHotmart, { once: true });
+        script.addEventListener('load', () => mountHotmart(), { once: true });
       }
     }
 
     mountHotmart();
 
-    const interval = setInterval(() => {
-      const target = document.getElementById('hotmart-sales-funnel');
-      if (target && target.children.length > 0) {
-        clearInterval(interval);
-      } else {
-        mountHotmart();
-      }
-    }, 400);
-
-    const timer = setTimeout(() => clearInterval(interval), 6000);
+    const timeout = setTimeout(mountHotmart, 600);
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(timer);
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -221,10 +211,10 @@ export default function UpsellRFEF({ onAccept, onDecline }: UpsellRFEFProps) {
           {/* ================= 5. CTA & HOTMART FUNNEL ================= */}
           <div className="pt-2">
             
-            {/* HOTMART CONTAINER */}
-            <div className="w-full flex justify-center items-center">
-              <div id="hotmart-sales-funnel" className="w-full flex justify-center items-center min-h-[60px]"></div>
-            </div>
+            {/* <!-- HOTMART - Sales Funnel Widget --> */}
+            {/* <!--- sales funnel container ---> */}
+            <div id="hotmart-sales-funnel"></div>
+            {/* <!-- HOTMART - Sales Funnel Widget --> */}
 
             {/* TRUST BADGES ROW (BELOW WIDGET) */}
             <div className="border-t border-slate-200 mt-4 pt-4">
